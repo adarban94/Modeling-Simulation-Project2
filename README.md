@@ -33,3 +33,10 @@ ODE Runge-Kutta | Orthogonal Collocation
 
 ### Solid Energy Balance
 ![Solid](/img/SolidEnergy.JPG)
+
+### References
+[Kinetic of ODH & Exp data](https://doi.org/10.1016/j.cej.2014.04.042)
+
+[Reactor modeling](https://doi.org/10.1080/00986445.2017.1396538)
+
+[Just help to code as an example](https://doi.org/10.1016/j.cherd.2019.04.028)
