@@ -5,7 +5,7 @@ L = 2.5;                         % [m]                              Length of re
 dt = 0.0256;                     % [m]                              Diameter of reactor.
 dp = 0.0082;                     % [m]                              Diameter of catalyts particle.
 epsilon = 0.48;                  % [m^3/m^3]                        Porosity.
-Density_bed = 50*(1000);         % [kg/m^3][g/m^3]                  Density of reactor bed.
+Density_bed = 75*(1000);         % [kg/m^3][g/m^3]                  Density of reactor bed. ###
 Phis = 1;                        % [unitless]                       Sphericity factor for spheres catalyts particles.
 as = 6*(1-epsilon)/(Phis*dp);    % [m^2/m^3]                        External surface to particle volume ratio.
 
@@ -13,16 +13,16 @@ as = 6*(1-epsilon)/(Phis*dp);    % [m^2/m^3]                        External sur
 
 R = 8.314;                             % [J/(mol*K)]                      Gas constant.
 Pt = 1*(101325);                       % [atm][Pa]                        Pressure of reactor bed.
-Tb = 450+(273.15);                     % [oC][K]                          Temperature of reactor coolant.(450-600 C)
-T0 = 300+(273.15);                     % [oC][K]                          Temperature of inlet reactor.
+Tb = 400+(273.15);                     % [oC][K]                          Temperature of reactor coolant.(400-480 C)
+T0 = 200+(273.15);                     % [oC][K]                          Temperature of inlet reactor.
 Rep = 1400;                            % [unitless]                       Reynolds number.
 Flowin = 4*(1/3600);                   % [Nm^3/h][Nm^3/s]                 Inlet volume flowrate.
 u0=Flowin/((pi/4)*dt^2);               % [m/s]                            Superficial velocity.
-y_Air_in = 0.99;                       % [%mol]                           Mole frac of inlet Air.(98-99 %)
-y_N2_in = y_Air_in*0.79;               % [%mol]                           Mole frac of inlet Nitrogen.
-y_C2H6_in = 0.01;                      % [%mol]                           Mole frac of inlet Ethane.(1-2 %)
+% y_Air_in = 0.99;                     % [%mol]                           Mole frac of inlet Air.(98-99 %)
+y_N2_in = 0.4;                         % [%mol]                           Mole frac of inlet Nitrogen.
+y_C2H6_in = 0.50;                      % [%mol]                           Mole frac of inlet Ethane.(1-40 %)
 y_C2H4_in = 0;                         % [%mol]                           Mole frac of inlet Ethene.
-y_O2_in = y_Air_in*0.21;               % [%mol]                           Mole frac of inlet Oxygen.
+y_O2_in = 0.1;                         % [%mol]                           Mole frac of inlet Oxygen.
 y_CO2_in = 0;                          % [%mol]                           Mole frac of inlet Carbon dioxid.
 y_CO_in = 0;                           % [%mol]                           Mole frac of inlet Carbon monoxid.
 y_H2O_in = 0;                          % [%mol]                           Mole frac of inlet Water.
@@ -54,10 +54,10 @@ hg = 928.8*(1000)*(1/3600);      % [kJ/(m^2*h*K)][J/(m^2*s*K)]      Surface heat
 
 keffz = 10;                      %[J/(m*s*K)]                       Effective thermal conductivity.
                                  %                                  in the radius direction.
-keffr = 2.7;                     %[J/(m*s*K)]                       Effective thermal conductivity.
-                                 %                                  in the radius direction.
+keffr = 9.72;                    %[J/(m*s*K)]                       Effective thermal conductivity.
+                                 %                                  in the radius direction, ESTIMATED BY BOUNDARY LAYER APPROX.
 
-hw = 1051.2*(1000)*(1/3600);     % [kJ/(m^2*h*K)][J/(m^2*s*K)]      Wall heat transfer coefficient.
+hw = 1051.2*(1000)*(1/3600);     % [kJ/(m^2*h*K)][J/(m^2*s*K)]      Wall heat transfer coefficient, ESTIMATED BY BOUNDARY LAYER APPROX.
 
 %% Defining the require constants of components properties
 %
@@ -72,13 +72,13 @@ C2H6 = struct('Mw',30.07,   'Tc',305.406,   'Pc',4880109,...
 C2H4 = struct('Mw',28.054,  'Tc',282.3438,  'Pc',5045427,...
     'cp_R',[1.424,0.014394,-0.000004392,0,1500] ,'deltaS0',-4.34e01 ,'deltaH0',(1000)*-1.48e02);
 O2   = struct('Mw',31.998,  'Tc',154.645,   'Pc',5043213,...
-    'cp_R',[3.639,0.000506,0,-22700,2000]       ,'deltaS0',-5.59e01 ,'deltaH0',(1000)*-6.02e01);
+    'cp_R',[3.639,0.000506,0,-22700,2000]       ,'deltaS0',-2.15e02 ,'deltaH0',(1000)*-4.56e01); % ###
 CO2  = struct('Mw',44.009,  'Tc',304.1548,  'Pc',7380862,...
     'cp_R',[5.457,0.001045,0,-115700,2000]      ,'deltaS0',-5.66e01 ,'deltaH0',(1000)*-8.38e01);
 CO   = struct('Mw',28.01,   'Tc',134.18,    'Pc',3710046,...
     'cp_R',[3.376,0.000557,0,-3100,2500]        ,'deltaS0',-8.66e01 ,'deltaH0',(1000)*-4.09e01);
 H2O  = struct('Mw',18.015,  'Tc',647.1081,  'Pc',22072227,...
-    'cp_R',[3.47,0.00145,0,12100,2000]          ,'deltaS0',-5.27e01 ,'deltaH0',(1000)*-8.63e01);
+    'cp_R',[3.47,0.00145,0,12100,2000]          ,'deltaS0',-4.20E01 ,'deltaH0',(1000)*-1.28e02); % ###
 N2   = struct('Mw',28.014,  'Tc',126.2069,  'Pc',3398154 ,...
     'cp_R',[3.28,0.000593,0,4000,2000]          ,'deltaS0',[0]      ,'deltaH0',[0]);
 
@@ -92,9 +92,9 @@ Components = [C2H6 C2H4 O2 CO2 CO H2O N2];       % List of components
 % component coefficients  vcoffrxn: [unitless]   deltaHstd: [J/mol]
 % component order list: [C2H6 C2H4 O2 CO2 CO H2O N2]
 
-RxnKinetic = struct('Aprime',[4.95 1.35 1.76 2.61 2.16]*(1/1000)*(1/3600),...
-    'EnergyA', [7.55e01 5.24e01 1.43e02 1.10e02 8.80e01]*(1000),...
-    'm', [1 5.45e-02 1.07 1.71e-01 5.38e-01],...
+RxnKinetic = struct('Aprime',[5.50 .686 1.58 2.6 .787]*(1/1000)*(1/3600),...
+    'EnergyA', [9.05e01 1.65e02 1.50e02 1.39e02 1.32e02]*(1000),...
+    'm', [1 9.22e-01 9.06e-01 1.23 9.05e-01],...
     'deltaHstd', 1000*[-111.43 -1443.15 -860 -1331.81 -760],...
     'vcoffrxn', [-1 1 -0.5 0 0 1 0; -1 0 -3.5 2 0 3 0;...
     -1 0 -2.5 0 2 3 0; 0 -1 -3 2 0 2 0; 0 -1 -2 0 2 2 0]);
