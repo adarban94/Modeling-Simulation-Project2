@@ -12,7 +12,7 @@ as = 6*(1-epsilon)/(Phis*dp);    % [m^2/m^3]                        External sur
 %% Defining the require constants of operation conditions
 
 R = 8.314;                             % [J/(mol*K)]                      Gas constant.
-Pt = 1*(101325);                       % [atm][Pa]                        Pressure of reactor bed.
+Pt = 5*(101325);                       % [atm][Pa]                        Pressure of reactor bed.                   ### Ref: fazlinezhad 2019
 Tb = 442.02+(273.15);                  % [oC][K]                          Temperature of reactor coolant.(400-480 C) ### Ref: fazlinezhad 2019
 T0 = 366.89+(273.15);                  % [oC][K]                          Temperature of inlet reactor.              ### Ref: fazlinezhad 2019
 Rep = 1400;                            % [unitless]                       Reynolds number.
@@ -167,14 +167,14 @@ Initial_Guess_C_CO2         =  ones(Nz,Nr)*((Pt*y_CO2_in)/(R*T0)) ;
 Initial_Guess_C_CO          =  ones(Nz,Nr)*((Pt*y_CO_in)/(R*T0))  ;
 Initial_Guess_C_H2O         =  ones(Nz,Nr)*((Pt*y_H2O_in)/(R*T0)) ;
 Initial_Guess_C_N2          =  ones(Nz,Nr)*((Pt*y_N2_in)/(R*T0))  ;
-Initial_Guess_Rof           =  ones(Nz,Nr)*615;                   
+Initial_Guess_Rof           =  ones(Nz,Nr)*2.130;                   % [kg/(m^3)] Aspen Hysys at inlet condition 
 Initial_Guess_Cs_C2H6       =  Initial_Guess_C_C2H6;
 Initial_Guess_Cs_C2H4       =  Initial_Guess_C_C2H4;
 Initial_Guess_Cs_O2         =  Initial_Guess_C_O2  ;
 Initial_Guess_Cs_CO2        =  Initial_Guess_C_CO2 ;
 Initial_Guess_Cs_CO         =  Initial_Guess_C_CO  ;
 Initial_Guess_Cs_H2O        =  Initial_Guess_C_H2O ;
-Initial_Guess_Cpf           =  ones(Nz,Nr)*33.3/29 ;                 % [J/(g.K)] Aspen Hysys at inlet condition
+Initial_Guess_Cpf           =  ones(Nz,Nr)*2.130/29.44 ;            % [J/(g.K)] Aspen Hysys at inlet condition
 Initial_Guess_T             =  ones(Nz,Nr)*T0;
 Initial_Guess_Ts            =  ones(Nz,Nr)*T0;
 
@@ -231,8 +231,8 @@ C_Ts(2:end-1,2:end-1)      = reshape(X(16*Nz*Nr+1:17*Nz*Nr),Nz,Nr)  ;
 %Initial guess for solving nonlieanr boundary alg equations
 C_solid_In = C0(1:6);                       % mole concentration of components in order: [C2H6 C2H4 O2 CO2 CO H2O]
 C_solid_Out= C0(1:6);
-C_Cpf_In   = 33.3/29;                       % [J/(mol.K)] Aspen Hysys at inlet condition
-C_Cpf_Out  = 33.3/29;                       % [J/(mol.K)] Aspen Hysys at inlet condition
+C_Cpf_In   = 2.130/29.44;                       % [J/(mol.K)] Aspen Hysys at inlet condition
+C_Cpf_Out  = 2.130/29.44;                       % [J/(mol.K)] Aspen Hysys at inlet condition
 Ts0        = T0;
 
 for k = 1:numel(r_nodes)
