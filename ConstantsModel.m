@@ -107,8 +107,8 @@ Nz = 10; % No. of interior point in z direction.
 Nr = 5 ; % No. of interior point in r direction.
 zmin = 0; zmax = 1;
 rmin = 0; rmax = 1;
-% z_nodes = [0,sort(Roots_of_Jacobi_Polynomial(0,0,Nz))',1] ;  % Roots of Jacobi polynomial with (a,b==0) in z direction.
-z_nodes = [0,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.5,0.7,0.8,1] ;
+z_nodes = [0,sort(Roots_of_Jacobi_Polynomial(0,0,Nz))',1] ;  % Roots of Jacobi polynomial with (a,b==0) in z direction.
+% z_nodes = [0,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.5,0.7,0.8,1] ;
 z_nodes = (zmax-zmin)*z_nodes+zmin;
 r_nodes = [0,sort(Roots_of_Jacobi_Polynomial(0,0,Nr))',1] ;  % Roots of Jacobi polynomial with (a,b==0) in r direction.
 r_nodes = (rmax-rmin)*r_nodes+rmin;
@@ -192,7 +192,7 @@ Initial_Guess=[reshape(Initial_Guess_C_C2H6,1,Nz*Nr)  ,  reshape(Initial_Guess_C
 
 Option = optimoptions('fsolve','Algorithm','levenberg-marquardt',...
     'Display','iter','FunctionTolerance',1e-20,'StepTolerance',1e-10,...
-    'MaxIterations',3);
+    'MaxIterations',30);
 X=fsolve(@(x) Equations(x,Az,Bz,Ar,Br,Nz,Nr,u0,C0,Pt,T0,hw,Tb,epsilon,Density_bed,...
     Flowin,Deffz,Deffr,keffz,keffr,R_nodes,kg,hg,as,Components,RxnKinetic,R),Initial_Guess,Option);
 
