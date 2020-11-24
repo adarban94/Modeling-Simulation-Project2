@@ -18,7 +18,7 @@ Tetha_O    = sqrt(K_O2*P_solid(3))*Tetha_star;
 k = ones(1,5);
 rxn = k(:);
 for i = 1:5
-    k(i)   = exp(RxnKinetic.Aprime(i) - RxnKinetic.EnergyA(i)/R*(1/Ts - 1/(Tstar+273.15)));
+    k(i)   = exp(log(RxnKinetic.Aprime(i)) - RxnKinetic.EnergyA(i)/R*(1/Ts - 1/(Tstar+273.15)));
     if i < 4
         rxn(i) = k(i) * P_solid(1) * Tetha_O^(RxnKinetic.m(i));
     else
