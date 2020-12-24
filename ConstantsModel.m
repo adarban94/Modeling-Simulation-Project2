@@ -19,10 +19,10 @@ Rep = 1400;                            % [unitless]                       Reynol
 Flowin = 4;                            % [Nm^3/h]                         Inlet volume flowrate.
 u0=Flowin/((pi/4)*dt^2);               % [m/h]                            Superficial velocity.
 y_Air_in = 0.98;                       % [%mol]                           Mole frac of inlet Air.
-y_N2_in = 0.79*y_Air_in;               % [%mol]                           Mole frac of inlet Nitrogen.               ### Ref: fazlinezhad 2019
-y_C2H6_in = 0.02;                      % [%mol]                           Mole frac of inlet Ethane.(1-40 %)         ### Ref: fazlinezhad 2019
+y_N2_in = 0.79*y_Air_in;               % [%mol]                           Mole frac of inlet Nitrogen.               ### Ref: Che-galicia 2018
+y_C2H6_in = 0.02;                      % [%mol]                           Mole frac of inlet Ethane.(1-40 %)         ### Ref: Che-galicia 2018
 y_C2H4_in = 0;                         % [%mol]                           Mole frac of inlet Ethene.
-y_O2_in = 0.21*y_Air_in;               % [%mol]                           Mole frac of inlet Oxygen.                 ### Ref: fazlinezhad 2019
+y_O2_in = 0.21*y_Air_in;               % [%mol]                           Mole frac of inlet Oxygen.                 ### Ref: Che-galicia 2018
 y_CO2_in = 0;                          % [%mol]                           Mole frac of inlet Carbon dioxid.
 y_CO_in = 0;                           % [%mol]                           Mole frac of inlet Carbon monoxid.
 y_H2O_in = 0;                          % [%mol]                           Mole frac of inlet Water.
@@ -47,17 +47,17 @@ C0 = [C0_C2H6          ...
 Deffr = 32;                      % [m^2/h]                          Effective mass transfer
                                  %                                  coefficient in radius direction.
 Deffz = 53;                      % [m^2/h]                          Effective mass transfer coefficient 
-                                 %                                  in horizontal axis direction ### Ref: Che-galicia 2015.
+                                 %                                  in horizontal axis direction ### Ref: Che-galicia 2018.
 
 kg = 576;                        % [m^3/(m^2*h)]                    Surface mass transfer coefficient.
 hg = 928.8;                      % [kJ/(m^2*h*K)]                   Surface heat transfer coefficient.
 
-keffz = 10;  %Assunption         %[kJ/(m*h*K)]                      Effective thermal conductivity.
+keffz = 10;  %Assumption         %[kJ/(m*h*K)]                      Effective thermal conductivity.
                                  %                                  in the radius direction.
 keffr = 9.72;                    %[kJ/(m*h*K)]                      Effective thermal conductivity.
-                                 %                                  in the radius direction, ESTIMATED BY BOUNDARY LAYER APPROX ### Ref: Che-galicia 2015.
+                                 %                                  in the radius direction, ESTIMATED BY BOUNDARY LAYER APPROX ### Ref: Che-galicia 2018.
 
-hw = 1051.2;                     % [kJ/(m^2*h*K)]                   Wall heat transfer coefficient, ESTIMATED BY BOUNDARY LAYER APPROX ### Ref: Che-galicia 2015.
+hw = 1051.2;                     % [kJ/(m^2*h*K)]                   Wall heat transfer coefficient, ESTIMATED BY BOUNDARY LAYER APPROX ### Ref: Che-galicia 2018.
 
 %% Defining the require constants of components properties
 %
@@ -103,8 +103,8 @@ RxnKinetic = struct('Aprime',[4.95 1.35 1.76 2.61 2.16],...
 
 %===Interior points and coefficients matrix -------------------------------
 
-Nz = 10; % No. of interior point in z direction.
-Nr = 3 ; % No. of interior point in r direction.
+Nz = 3; % No. of interior point in z direction.
+Nr = 1 ; % No. of interior point in r direction.
 zmin = 0; zmax = 1;
 rmin = 0; rmax = 1;
 z_nodes = [0,sort(Roots_of_Jacobi_Polynomial(0,0,Nz))',1] ;  % Roots of Jacobi polynomial with (a,b==0) in z direction.
@@ -189,8 +189,10 @@ Initial_Guess=[reshape(Initial_Guess_C_C2H6,1,Nz*Nr)  ,  reshape(Initial_Guess_C
 
 %===Solver ----------------------------------------------------------------
 
-Option = optimoptions('fsolve','Display','iter','FunctionTolerance',...
-    1e-20,'StepTolerance',1e-10);
+Option = optimoptions('fsolve','Algorithm','levenberg-marquardt',...
+'Display','iter','MaxFunctionEvaluations',2000000,'MaxIterations',200000,...
+'FunctionTolerance',1e-20,'StepTolerance',1e-10);
+
 X=fsolve(@(x) Equations(x,Az,Bz,Ar,Br,Nz,Nr,u0,C0,Pt,T0,hw,Tb,epsilon,Density_bed,...
     Flowin,Deffz,Deffr,keffz,keffr,R_nodes,kg,hg,as,Components,RxnKinetic,R),Initial_Guess,Option);
 
