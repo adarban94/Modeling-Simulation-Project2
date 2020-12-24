@@ -4,7 +4,7 @@ Tstar=400; %************** Assumption [=] C **************
 Ct_solid = sum(CC_s);   % total mole concentration in solid phase
 
 % component order list: [C2H6 C2H4 O2 CO2 CO H2O N2]
-P_solid = Pt*(CC_s/Ct_solid);
+P_solid = 101325*Pt*(CC_s/Ct_solid); 
 
 % component order list for reaction: [C2H6 C2H4 O2 CO2 CO H2O]
 K = ones(1,6);
