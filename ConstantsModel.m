@@ -360,3 +360,42 @@ for i = 1 : numel(z_nodes)
     end
 end
 %% PLot
+
+% Discretize the z and r direction
+zz = linspace(0,1,20) ;
+rr = linspace(0,1,10) ;
+
+% Initialize the gas and solid concentration and temperature
+C_C_C2H6  = zeros(numel(zz),numel(rr))    ;   C_C_C2H4  = zeros(numel(zz),numel(rr))  ;
+C_C_O2    = zeros(numel(zz),numel(rr))    ;   C_C_CO2   = zeros(numel(zz),numel(rr))  ;
+C_C_CO    = zeros(numel(zz),numel(rr))    ;   C_C_H2O   = zeros(numel(zz),numel(rr))  ;
+C_C_N2    = zeros(numel(zz),numel(rr))    ;   C_Rof     = zeros(numel(zz),numel(rr))  ;
+C_Cs_C2H6 = zeros(numel(zz),numel(rr))    ;   C_Cs_C2H4 = zeros(numel(zz),numel(rr))  ;
+C_Cs_O2   = zeros(numel(zz),numel(rr))    ;   C_Cs_CO2  = zeros(numel(zz),numel(rr))  ;
+C_Cs_CO   = zeros(numel(zz),numel(rr))    ;   C_Cs_H2O  = zeros(numel(zz),numel(rr))  ;
+C_Cpf     = zeros(numel(zz),numel(rr))    ;   C_T       = zeros(numel(zz),numel(rr))  ;
+C_Ts      = zeros(numel(zz),numel(rr))    ;
+
+% Calculate the concentration and temperature for specified nodes in reactor
+for i = 1 : numel(zz)
+    for j = 1 : numel(rr)     
+        C_C_C2H6(i,j)  = double(subs(C_C2H6_hat, [z,r], [zz(i),rr(j)]))    ;
+        C_C_C2H4(i,j)  = double(subs(C_C2H4_hat, [z,r], [zz(i),rr(j)]))    ;
+        C_C_O2(i,j)    = double(subs(C_O2_hat, [z,r], [zz(i),rr(j)]))      ;  
+        C_C_CO2(i,j)   = double(subs(C_CO2_hat, [z,r], [zz(i),rr(j)]))     ;
+        C_C_CO(i,j)    = double(subs(C_CO_hat, [z,r], [zz(i),rr(j)]))      ;
+        C_C_H2O(i,j)   = double(subs(C_H2O_hat, [z,r], [zz(i),rr(j)]))     ;
+        C_C_N2(i,j)    = double(subs(C_N2_hat, [z,r], [zz(i),rr(j)]))      ;
+        C_Rof(i,j)     = double(subs(Rof_hat, [z,r], [zz(i),rr(j)]))       ;
+        C_Cs_C2H6(i,j) = double(subs(Cs_C2H6_hat, [z,r], [zz(i),rr(j)]))   ;
+        C_Cs_C2H4(i,j) = double(subs(Cs_C2H4_hat, [z,r], [zz(i),rr(j)]))   ;
+        C_Cs_O2(i,j)   = double(subs(Cs_O2_hat, [z,r], [zz(i),rr(j)]))     ;
+        C_Cs_CO2(i,j)  = double(subs(Cs_CO2_hat, [z,r], [zz(i),rr(j)]))    ;
+        C_Cs_CO(i,j)   = double(subs(Cs_CO_hat, [z,r], [zz(i),rr(j)]))     ;
+        C_Cs_H2O(i,j)  = double(subs(Cs_H2O_hat, [z,r], [zz(i),rr(j)]))    ;
+        C_Cpf(i,j)     = double(subs(Cpf_hat, [z,r], [zz(i),rr(j)]))       ;
+        C_T(i,j)       = double(subs(T_hat, [z,r], [zz(i),rr(j)]))         ;
+        C_Ts(i,j)      = double(subs(Ts_hat, [z,r], [zz(i),rr(j)]))        ;
+    end  
+end
+
