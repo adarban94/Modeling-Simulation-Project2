@@ -1,4 +1,4 @@
-clc;format Short
+clc;format long
 %% Defining the require constants of catalyts and reactor dimensions
 
 L = 2.5;                         % [m]                              Length of reactor.
@@ -263,13 +263,13 @@ for k = 2:numel(r_nodes)-1
     C_Ts(1,k)      = X(10);
     
     %z=L
-    C_C_C2H6(end,k)  = (((Az(end,2:end-1)*C_C_C2H6(2:end-1,k))+(Az(end,1)*(((u0*C0(1))+(epsilon*Deffz*Az(1,2:end-1)*C_C_C2H6(2:end-1,k))-(((epsilon*Deffz*Az(1,end))/(Az(end,end)))*Az(end,2:end-1)*C_C_C2H6(2:end-1,k)))/((u0)+(((epsilon*Deffz*Az(1,end))/(Az(end,end)))*Az(end,1))-(epsilon*Deffz*Az(1,1))))))/(-Az(end,end)));
-    C_C_C2H4(end,k)  = (((Az(end,2:end-1)*C_C_C2H4(2:end-1,k))+(Az(end,1)*(((u0*C0(2))+(epsilon*Deffz*Az(1,2:end-1)*C_C_C2H4(2:end-1,k))-(((epsilon*Deffz*Az(1,end))/(Az(end,end)))*Az(end,2:end-1)*C_C_C2H4(2:end-1,k)))/((u0)+(((epsilon*Deffz*Az(1,end))/(Az(end,end)))*Az(end,1))-(epsilon*Deffz*Az(1,1))))))/(-Az(end,end)));
-    C_C_O2(end,k)    = (((Az(end,2:end-1)*C_C_O2(2:end-1,k))+(Az(end,1)*(((u0*C0(3))+(epsilon*Deffz*Az(1,2:end-1)*C_C_O2(2:end-1,k))-(((epsilon*Deffz*Az(1,end))/(Az(end,end)))*Az(end,2:end-1)*C_C_O2(2:end-1,k)))/((u0)+(((epsilon*Deffz*Az(1,end))/(Az(end,end)))*Az(end,1))-(epsilon*Deffz*Az(1,1))))))/(-Az(end,end)));
-    C_C_CO2(end,k)   = (((Az(end,2:end-1)*C_C_CO2(2:end-1,k))+(Az(end,1)*(((u0*C0(4))+(epsilon*Deffz*Az(1,2:end-1)*C_C_CO2(2:end-1,k))-(((epsilon*Deffz*Az(1,end))/(Az(end,end)))*Az(end,2:end-1)*C_C_CO2(2:end-1,k)))/((u0)+(((epsilon*Deffz*Az(1,end))/(Az(end,end)))*Az(end,1))-(epsilon*Deffz*Az(1,1))))))/(-Az(end,end)));
-    C_C_CO(end,k)    = (((Az(end,2:end-1)*C_C_CO(2:end-1,k))+(Az(end,1)*(((u0*C0(5))+(epsilon*Deffz*Az(1,2:end-1)*C_C_CO(2:end-1,k))-(((epsilon*Deffz*Az(1,end))/(Az(end,end)))*Az(end,2:end-1)*C_C_CO(2:end-1,k)))/((u0)+(((epsilon*Deffz*Az(1,end))/(Az(end,end)))*Az(end,1))-(epsilon*Deffz*Az(1,1))))))/(-Az(end,end)));
-    C_C_H2O(end,k)   = (((Az(end,2:end-1)*C_C_H2O(2:end-1,k))+(Az(end,1)*(((u0*C0(6))+(epsilon*Deffz*Az(1,2:end-1)*C_C_H2O(2:end-1,k))-(((epsilon*Deffz*Az(1,end))/(Az(end,end)))*Az(end,2:end-1)*C_C_H2O(2:end-1,k)))/((u0)+(((epsilon*Deffz*Az(1,end))/(Az(end,end)))*Az(end,1))-(epsilon*Deffz*Az(1,1))))))/(-Az(end,end)));
-    C_C_N2(end,k)    = (((Az(end,2:end-1)*C_C_N2(2:end-1,k))+(Az(end,1)*(((u0*C0(7))+(epsilon*Deffz*Az(1,2:end-1)*C_C_N2(2:end-1,k))-(((epsilon*Deffz*Az(1,end))/(Az(end,end)))*Az(end,2:end-1)*C_C_N2(2:end-1,k)))/((u0)+(((epsilon*Deffz*Az(1,end))/(Az(end,end)))*Az(end,1))-(epsilon*Deffz*Az(1,1))))))/(-Az(end,end)));
+    C_C_C2H6(end,k)  = (((Az(end,2:end-1)*C_C_C2H6(2:end-1,k))+(Az(end,1)*C_C_C2H6(1,k)))/(-Az(end,end)));
+    C_C_C2H4(end,k)  = (((Az(end,2:end-1)*C_C_C2H4(2:end-1,k))+(Az(end,1)*C_C_C2H4(1,k)))/(-Az(end,end)));
+    C_C_O2(end,k)    = (((Az(end,2:end-1)*C_C_O2(2:end-1,k))+(Az(end,1)*C_C_O2(1,k)))/(-Az(end,end)));
+    C_C_CO2(end,k)   = (((Az(end,2:end-1)*C_C_CO2(2:end-1,k))+(Az(end,1)*C_C_CO2(1,k)))/(-Az(end,end)));
+    C_C_CO(end,k)    = (((Az(end,2:end-1)*C_C_CO(2:end-1,k))+(Az(end,1)*C_C_CO(1,k)))/(-Az(end,end)));
+    C_C_H2O(end,k)   = (((Az(end,2:end-1)*C_C_H2O(2:end-1,k))+(Az(end,1)*C_C_H2O(1,k)))/(-Az(end,end)));
+    C_C_N2(end,k)    = (((Az(end,2:end-1)*C_C_N2(2:end-1,k))+(Az(end,1)*C_C_N2(1,k)))/(-Az(end,end)));
     C_gas_In         = [C_C_C2H6(1,k) C_C_C2H4(1,k) C_C_O2(1,k) C_C_CO2(1,k) C_C_CO(1,k) C_C_H2O(1,k) C_C_N2(1,k)];         % mole fraction of components in order: [C2H6 C2H4 O2 CO2 CO H2O]
     C_gas_Out        = [C_C_C2H6(end-1,k) C_C_C2H4(end,k) C_C_O2(end,k) C_C_CO2(end,k) C_C_CO(end,k) C_C_H2O(end,k) C_C_N2(end,k)];         % mole fraction of components in order: [C2H6 C2H4 O2 CO2 CO H2O]
     Initial_guess    = [C_gas_Out C_Cpf_Out C_Rof_Out T0 Ts0];
@@ -324,7 +324,7 @@ for i = 1:numel(z_nodes)
     C_gas_In         = [C_C_C2H6(i,1) C_C_C2H4(i,1) C_C_O2(i,1) C_C_CO2(i,1) C_C_CO(i,1) C_C_H2O(i,1) C_C_N2(i,1)];         % mole fraction of components in order: [C2H6 C2H4 O2 CO2 CO H2O]
     C_gas_Out        = [C_C_C2H6(i,end) C_C_C2H4(i,end) C_C_O2(i,end) C_C_CO2(i,end) C_C_CO(i,end) C_C_H2O(i,end) C_C_N2(i,end)];         % mole fraction of components in order: [C2H6 C2H4 O2 CO2 CO H2O]
     Initial_guess    = [C_gas_Out C_Cpf_Out C_Rof_Out T0 Ts0];
-    X              = fsolve(@(x) BoundaryEquations(x,Az,Ar,C_T(i,2:end-1),T0,u0,keffz,keffr,hw,Tb,epsilon,kg,hg,as,Density_bed,Flowin,Pt,R,RxnKinetic,Components,C_gas_In,C_gas_Out,'Last','Radius'),Initial_guess,Option);
+    X                = fsolve(@(x) BoundaryEquations(x,Az,Ar,C_T(i,2:end-1),T0,u0,keffz,keffr,hw,Tb,epsilon,kg,hg,as,Density_bed,Flowin,Pt,R,RxnKinetic,Components,C_gas_In,C_gas_Out,'Last','Radius'),Initial_guess,Option);
     
     C_Cs_C2H6(i,end) = X(1);
     C_Cs_C2H4(i,end) = X(2);
@@ -359,5 +359,4 @@ for i = 1 : numel(z_nodes)
         Ts_hat      = C_Ts(i,j)      * Lz(i) * Lr(j) + Ts_hat      ;
     end
 end
-C_C2H6_hat=vpa(C_C2H6_hat,4);
 %% PLot
