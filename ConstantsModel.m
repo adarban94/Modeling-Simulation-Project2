@@ -105,12 +105,12 @@ RxnKinetic = struct('Aprime',[4.95 1.35 1.76 2.61 2.16],...
 
 Nz = 3; % No. of interior point in z direction.
 Nr = 1 ; % No. of interior point in r direction.
-zmin = 0; zmax = 1;
-rmin = 0; rmax = 1;
+zmin = 0; zmax = L;
+rmin = 0; rmax = dt/2;
 z_nodes = [0,sort(Roots_of_Jacobi_Polynomial(0,0,Nz))',1] ;  % Roots of Jacobi polynomial with (a,b==0) in z direction.
-z_nodes = (zmax-zmin)*z_nodes+zmin;
+% z_nodes = (zmax-zmin)*z_nodes+zmin;
 r_nodes = [0,sort(Roots_of_Jacobi_Polynomial(0,0,Nr))',1] ;  % Roots of Jacobi polynomial with (a,b==0) in r direction.
-r_nodes = (rmax-rmin)*r_nodes+rmin;
+% r_nodes = (rmax-rmin)*r_nodes+rmin;
 syms z
 Lz = sym(ones(numel(z_nodes),1));
 for i=1:numel(z_nodes)
@@ -398,4 +398,67 @@ for i = 1 : numel(zz)
         C_Ts(i,j)      = double(subs(Ts_hat, [z,r], [zz(i),rr(j)]))        ;
     end  
 end
+
+% Convert the normalize r,z direction to normal direction
+Zz = (zmax - zmin)*zz + zmin ;
+Rr = (rmax - rmin)*rr + rmin ;
+
+% Initial concentration and Temperature of reactor
+Initial_C_C2H6        =  ones(length(zz),length(rr))*C0_C2H6   ;
+Initial_C_C2H4        =  ones(length(zz),length(rr))*C0_C2H4   ;
+Initial_C_O2          =  ones(length(zz),length(rr))*C0_O2     ;
+Initial_C_CO2         =  ones(length(zz),length(rr))*C0_CO2    ;
+Initial_C_CO          =  ones(length(zz),length(rr))*C0_CO     ;
+Initial_C_H2O         =  ones(length(zz),length(rr))*C0_H2O    ;
+Initial_C_N2          =  ones(length(zz),length(rr))*C0_N2     ;
+
+% conversion type(1) of [C2H6 C2H4 O2 CO2 CO] from equ (34),(35)
+
+% Conv_C2H6 = abs(C_C_C2H6 - Initial_C_C2H6)./(Initial_C_C2H6)   ;
+% Conv_C2H4 = (C_C_C2H4 - Initial_C_C2H4)./(Initial_C_C2H6)      ;
+% Conv_O2   = abs(C_C_O2 - Initial_C_O2)./(Initial_C_O2)         ;
+% Conv_CO2  = (C_C_CO2 - Initial_C_CO2)./(Initial_C_C2H6)        ;
+% Conv_CO   = (C_C_CO - Initial_C_CO)./(Initial_C_C2H6)          ;
+
+% conversion type(2) of [C2H6 C2H4 O2 CO2 CO] from equ (34),(35)
+
+% Conv_C2H6 = abs(C_C_C2H6)./(Initial_C_C2H6)   ;
+% Conv_C2H4 = (C_C_C2H4 - Initial_C_C2H4)./(Initial_C_C2H6)      ;
+% Conv_O2   = abs(C_C_O2)./(Initial_C_O2)         ;
+% Conv_CO2  = (C_C_CO2 - Initial_C_CO2)./(Initial_C_C2H6)        ;
+% Conv_CO   = (C_C_CO - Initial_C_CO)./(Initial_C_C2H6)          ;
+
+% conversion type(3) of [C2H6 C2H4 O2 CO2 CO] from equ (34),(35)
+
+Conv_C2H6 = abs(C_C_C2H6)./(Initial_C_C2H6)   ;
+Conv_C2H4 = (C_C_C2H4)./(Initial_C_C2H6)      ;
+Conv_O2   = abs(C_C_O2)./(Initial_C_O2)         ;
+Conv_CO2  = (C_C_CO2)./(Initial_C_C2H6)        ;
+Conv_CO   = (C_C_CO)./(Initial_C_C2H6)          ;
+
+% plot the converion and temperature in reactor length (considering with 
+% mean of r direction conversion and temperature)
+
+figure(1)
+
+plot(Zz, mean(Conv_C2H6,2), '--g', Zz, mean(Conv_C2H4,2), 'c', ...
+     Zz, mean(Conv_O2,2), '-.r', Zz, mean(Conv_CO2,2), '--b', ...
+     Zz, mean(Conv_CO,2), ':m', 'LineWidth',2)
+title('ODH reactor modeling - Conv & Yield')
+xlabel('Reactor length [m]')
+ylabel('Conversion and Yield')
+grid minor
+
+figure(2)
+
+plot(Zz, mean(C_T,2), 'g', 'LineWidth',2)
+title('ODH reactor modeling - Temp')
+xlabel('Reactor length [m]')
+ylabel('Temperature [oC]')
+grid minor
+
+
+%% Save the results
+% save('Results.mat','Conv_C2H6','Conv_C2H4','Conv_O2','Conv_CO2','Conv_CO','C_T','Zz','Rr')
+
 
