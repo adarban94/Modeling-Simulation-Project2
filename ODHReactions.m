@@ -1,6 +1,6 @@
 function rxn = ODHReactions(Cpf,CC_s,Ts,R,Pt,Flowin,RxnKinetic,deltaS0,deltaH0,compnumber,type)
 % This code is for modeling of ODH reaction kinetics
-Tstar=400; %************** Assumption [=] C **************
+Tstar=298; %************** Assumption [=] C **************
 Ct_solid = sum(CC_s);   % total mole concentration in solid phase
 
 % component order list: [C2H6 C2H4 O2 CO2 CO H2O N2]
@@ -39,7 +39,7 @@ if strcmp(type,'Energy') == 1
     %     deltaH_reactants = sum(n_react * Cpf * (298.15 - Ts));
     %     deltaH_products  = sum(n_product * Cpf * (Ts - 298.15));
     deltaH_std = [RxnKinetic.deltaHstd]';
-    rxn = sum(rxn' * (deltaH_std));% + 0*deltaH_reactants + 0*deltaH_products));
+    rxn = sum(rxn' * (-deltaH_std));% + 0*deltaH_reactants + 0*deltaH_products));
 elseif strcmp(type,'Mass') == 1
     % sum of rate of reactions
     rxn = rxn' * RxnKinetic.vcoffrxn(:,compnumber);
