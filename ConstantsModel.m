@@ -1,4 +1,4 @@
-clc;format long
+clc;clear all;format long
 %% Defining the require constants of catalyts and reactor dimensions
 
 L = 2.5;                         % [m]                              Length of reactor.
@@ -18,9 +18,9 @@ T0 = 300+273.15;                       % [K]                              Temper
 Rep = 1400;                            % [unitless]                       Reynolds number.
 Flowin = 4;                            % [Nm^3/h]                         Inlet volume flowrate.
 u0=Flowin/((pi/4)*dt^2);               % [m/h]                            Superficial velocity.
-y_Air_in = 0.98;                       % [%mol]                           Mole frac of inlet Air.
+y_Air_in = 0.98;                      % [%mol]                           Mole frac of inlet Air.
 y_N2_in = 0.79*y_Air_in;               % [%mol]                           Mole frac of inlet Nitrogen.               ### Ref: Che-galicia 2018
-y_C2H6_in = 0.02;                      % [%mol]                           Mole frac of inlet Ethane.(1-40 %)         ### Ref: Che-galicia 2018
+y_C2H6_in = 0.02;                     % [%mol]                           Mole frac of inlet Ethane.(1-40 %)         ### Ref: Che-galicia 2018
 y_C2H4_in = 0;                         % [%mol]                           Mole frac of inlet Ethene.
 y_O2_in = 0.21*y_Air_in;               % [%mol]                           Mole frac of inlet Oxygen.                 ### Ref: Che-galicia 2018
 y_CO2_in = 0;                          % [%mol]                           Mole frac of inlet Carbon dioxid.
@@ -103,14 +103,13 @@ RxnKinetic = struct('Aprime',[4.95 1.35 1.76 2.61 2.16],...
 
 %===Interior points and coefficients matrix -------------------------------
 
-Nz = 3; % No. of interior point in z direction.
+Nz = 2; % No. of interior point in z direction.
 Nr = 1 ; % No. of interior point in r direction.
 zmin = 0; zmax = L;
 rmin = 0; rmax = dt/2;
 z_nodes = [0,sort(Roots_of_Jacobi_Polynomial(0,0,Nz))',1] ;  % Roots of Jacobi polynomial with (a,b==0) in z direction.
-% z_nodes = (zmax-zmin)*z_nodes+zmin;
 r_nodes = [0,sort(Roots_of_Jacobi_Polynomial(0,0,Nr))',1] ;  % Roots of Jacobi polynomial with (a,b==0) in r direction.
-% r_nodes = (rmax-rmin)*r_nodes+rmin;
+
 syms z
 Lz = sym(ones(numel(z_nodes),1));
 for i=1:numel(z_nodes)
@@ -191,7 +190,8 @@ Initial_Guess=[reshape(Initial_Guess_C_C2H6,1,Nz*Nr)  ,  reshape(Initial_Guess_C
 
 Option = optimoptions('fsolve','Algorithm','levenberg-marquardt',...
     'Display','iter','MaxFunctionEvaluations',20000000,'MaxIterations',2000000,...
-    'FunctionTolerance',1e-20,'StepTolerance',1e-10);
+   'FunctionTolerance',1e-20,'StepTolerance',1e-10);
+
 
 X=fsolve(@(x) Equations(x,Az,Bz,Ar,Br,Nz,Nr,u0,C0,Pt,T0,hw,Tb,epsilon,Density_bed,...
     Flowin,Deffz,Deffr,keffz,keffr,R_nodes,kg,hg,as,Components,RxnKinetic,R),Initial_Guess,Option);
@@ -336,6 +336,7 @@ for i = 1:numel(z_nodes)
     C_Rof(i,end)     = X(8);
     C_T(i,end)       = X(9);
     C_Ts(i,end)      = X(10);
+    pause
 end
 
 for i = 1 : numel(z_nodes)
