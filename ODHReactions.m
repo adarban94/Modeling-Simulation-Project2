@@ -1,6 +1,6 @@
 function rxn = ODHReactions(Cpf,CC_s,Ts,R,Pt,Flowin,RxnKinetic,deltaS0,deltaH0,compnumber,type)
 % This code is for modeling of ODH reaction kinetics
-Tstar=298; %************** Assumption [=] C **************
+Tstar=440+273.15; %************** Assumption [=] K **************
 Ct_solid = sum(CC_s);   % total mole concentration in solid phase
 
 % component order list: [C2H6 C2H4 O2 CO2 CO H2O N2]
@@ -9,7 +9,7 @@ P_solid = 101325*Pt*(CC_s/Ct_solid);
 % component order list for reaction: [C2H6 C2H4 O2 CO2 CO H2O]
 K = ones(1,6);
 for n = 1:6
-    K(n) = exp((0.001*deltaS0(n))/R - (deltaH0(n)*(1/Ts - 1/(Tstar+273.15)))/R);
+    K(n) = exp((0.001*deltaS0(n))/R - (deltaH0(n)*(1/Ts - 1/(Tstar)))/R);
 end
 
 Tetha_star = 1/(1 + K(1)*P_solid(1) + K(2)*P_solid(2) + sqrt(K(3)*P_solid(3)) + ...
@@ -22,7 +22,7 @@ Tetha_C2H4 = K(2)*P_solid(2)*Tetha_star;
 k = ones(1,5);
 rxn = k(:);
 for i = 1:5
-    k(i)   = exp(RxnKinetic.Aprime(i) - (RxnKinetic.EnergyA(i)/R)*(1/Ts - 1/(Tstar+273.15)));
+    k(i)   = exp(RxnKinetic.Aprime(i) - (RxnKinetic.EnergyA(i)/R)*(1/Ts - 1/(Tstar)));
     if i < 4
         rxn(i) = k(i) * Tetha_O^(RxnKinetic.m(i)) * Tetha_C2H6;
     else
@@ -39,7 +39,7 @@ if strcmp(type,'Energy') == 1
     %     deltaH_reactants = sum(n_react * Cpf * (298.15 - Ts));
     %     deltaH_products  = sum(n_product * Cpf * (Ts - 298.15));
     deltaH_std = [RxnKinetic.deltaHstd]';
-    rxn = sum(rxn' * (-deltaH_std));% + 0*deltaH_reactants + 0*deltaH_products));
+    rxn = rxn' * (-deltaH_std);% + 0*deltaH_reactants + 0*deltaH_products));
 elseif strcmp(type,'Mass') == 1
     % sum of rate of reactions
     rxn = rxn' * RxnKinetic.vcoffrxn(:,compnumber);
