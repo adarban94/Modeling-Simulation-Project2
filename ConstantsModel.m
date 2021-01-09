@@ -18,9 +18,9 @@ T0 = 300+273.15;                       % [K]                              Temper
 Rep = 1400;                            % [unitless]                       Reynolds number.
 Flowin = 4;                            % [Nm^3/h]                         Inlet volume flowrate.
 u0=Flowin/((pi/4)*dt^2);               % [m/h]                            Superficial velocity.
-y_Air_in = 0.98;                      % [%mol]                           Mole frac of inlet Air.
+y_Air_in = 0.98;                       % [%mol]                           Mole frac of inlet Air.
 y_N2_in = 0.79*y_Air_in;               % [%mol]                           Mole frac of inlet Nitrogen.               ### Ref: Che-galicia 2018
-y_C2H6_in = 0.02;                     % [%mol]                           Mole frac of inlet Ethane.(1-40 %)         ### Ref: Che-galicia 2018
+y_C2H6_in = 0.02;                      % [%mol]                           Mole frac of inlet Ethane.(1-40 %)         ### Ref: Che-galicia 2018
 y_C2H4_in = 0;                         % [%mol]                           Mole frac of inlet Ethene.
 y_O2_in = 0.21*y_Air_in;               % [%mol]                           Mole frac of inlet Oxygen.                 ### Ref: Che-galicia 2018
 y_CO2_in = 0;                          % [%mol]                           Mole frac of inlet Carbon dioxid.
@@ -29,7 +29,7 @@ y_H2O_in = 0;                          % [%mol]                           Mole f
 y = [y_C2H6_in          ...
     y_C2H4_in y_O2_in  ...
     y_CO2_in  y_CO_in  ...
-    y_H2O_in  y_N2_in     ];          % [%mol]                           Mole frac list of total componets [C2H6 C2H4 O2 CO2 CO H2O N2]
+    y_H2O_in  y_N2_in     ];           % [%mol]                           Mole frac list of total componets [C2H6 C2H4 O2 CO2 CO H2O N2]
 C0_C2H6  =  ((Pt*y_C2H6_in)/(R*T0));   % [mol/m^3]                        Inlet concentration of C2H6
 C0_C2H4  =  ((Pt*y_C2H4_in)/(R*T0));   % [mol/m^3]                        Inlet concentration of C2H4
 C0_O2    =  ((Pt*y_O2_in)/(R*T0))  ;   % [mol/m^3]                        Inlet concentration of O2
@@ -103,8 +103,8 @@ RxnKinetic = struct('Aprime',[4.95 1.35 1.76 2.61 2.16],...
 
 %===Interior points and coefficients matrix -------------------------------
 
-Nz = 2; % No. of interior point in z direction.
-Nr = 1 ; % No. of interior point in r direction.
+Nz = 3; % No. of interior point in z direction.
+Nr = 1; % No. of interior point in r direction.
 zmin = 0; zmax = L;
 rmin = 0; rmax = dt/2;
 z_nodes = [0,sort(Roots_of_Jacobi_Polynomial(0,0,Nz))',1] ;  % Roots of Jacobi polynomial with (a,b==0) in z direction.
@@ -336,7 +336,7 @@ for i = 1:numel(z_nodes)
     C_Rof(i,end)     = X(8);
     C_T(i,end)       = X(9);
     C_Ts(i,end)      = X(10);
-    pause
+    
 end
 
 for i = 1 : numel(z_nodes)
