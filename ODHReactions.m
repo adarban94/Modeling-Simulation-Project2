@@ -1,6 +1,6 @@
 function rxn = ODHReactions(Cpf,CC_s,Ts,R,Pt,Flowin,RxnKinetic,deltaS0,deltaH0,compnumber,type)
 % This code is for modeling of ODH reaction kinetics
-Tstar=440+273.15; %************** Assumption [=] K **************
+Tstar=345+273.15; %************** Assumption [=] K **************
 Ct_solid = sum(CC_s);   % total mole concentration in solid phase
 
 % component order list: [C2H6 C2H4 O2 CO2 CO H2O N2]
