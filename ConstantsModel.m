@@ -151,7 +151,7 @@ for i = 1:numel(r_nodes)
     end
 end
 
-% load Orthogonal_Matrix.mat
+%  load Orthogonal_Matrix.mat
 %===Initial guess ---------------------------------------------------------
 
 Nz = length(z_nodes)-2;  % Declare the number of Interior nodes for BC
@@ -189,8 +189,8 @@ Initial_Guess=[reshape(Initial_Guess_C_C2H6,1,Nz*Nr)  ,  reshape(Initial_Guess_C
 %===Solver ----------------------------------------------------------------
 
 Option = optimoptions('fsolve','Algorithm','levenberg-marquardt',...
-    'Display','iter','MaxFunctionEvaluations',20000000,'MaxIterations',2000000,...
-   'FunctionTolerance',1e-20,'StepTolerance',1e-10);
+    'Display','iter','MaxFunctionEvaluations',20000000,'MaxIterations',2500,...
+    'FunctionTolerance',1e-20,'StepTolerance',1e-10);
 
 
 X=fsolve(@(x) Equations(x,Az,Bz,Ar,Br,Nz,Nr,u0,C0,Pt,T0,hw,Tb,epsilon,Density_bed,...
@@ -290,13 +290,13 @@ end
 
 for i = 1:numel(z_nodes)
     %r=0
-    C_C_C2H6(i,1)  = (((Ar(1,2:end-1)*C_C_C2H6(i,2:end-1))-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_C2H6(i,2:end-1)))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))));
-    C_C_C2H4(i,1)  = (((Ar(1,2:end-1)*C_C_C2H4(i,2:end-1))-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_C2H4(i,2:end-1)))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))));
-    C_C_O2(i,1)    = (((Ar(1,2:end-1)*C_C_O2(i,2:end-1))-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_O2(i,2:end-1)))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))));
-    C_C_CO2(i,1)   = (((Ar(1,2:end-1)*C_C_CO2(i,2:end-1))-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_CO2(i,2:end-1)))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))));
-    C_C_CO(i,1)    = (((Ar(1,2:end-1)*C_C_CO(i,2:end-1))-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_CO(i,2:end-1)))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))));
-    C_C_H2O(i,1)   = (((Ar(1,2:end-1)*C_C_H2O(i,2:end-1))-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_H2O(i,2:end-1)))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))));
-    C_C_N2(i,1)    = (((Ar(1,2:end-1)*C_C_N2(i,2:end-1))-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_N2(i,2:end-1)))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))));
+    C_C_C2H6(i,1)  = (((Ar(1,2:end-1)*C_C_C2H6(i,2:end-1)')-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_C2H6(i,2:end-1)'))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))));
+    C_C_C2H4(i,1)  = (((Ar(1,2:end-1)*C_C_C2H4(i,2:end-1)')-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_C2H4(i,2:end-1)'))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))));
+    C_C_O2(i,1)    = (((Ar(1,2:end-1)*C_C_O2(i,2:end-1)')-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_O2(i,2:end-1)'))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))));
+    C_C_CO2(i,1)   = (((Ar(1,2:end-1)*C_C_CO2(i,2:end-1)')-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_CO2(i,2:end-1)'))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))));
+    C_C_CO(i,1)    = (((Ar(1,2:end-1)*C_C_CO(i,2:end-1)')-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_CO(i,2:end-1)'))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))));
+    C_C_H2O(i,1)   = (((Ar(1,2:end-1)*C_C_H2O(i,2:end-1)')-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_H2O(i,2:end-1)'))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))));
+    C_C_N2(i,1)    = (((Ar(1,2:end-1)*C_C_N2(i,2:end-1)')-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_N2(i,2:end-1)'))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))));
     C_gas_In       = [C_C_C2H6(i,1) C_C_C2H4(i,1) C_C_O2(i,1) C_C_CO2(i,1) C_C_CO(i,1) C_C_H2O(i,1) C_C_N2(i,1)];         % mole fraction of components in order: [C2H6 C2H4 O2 CO2 CO H2O]
     C_gas_Out      = [C_C_C2H6(i,end) C_C_C2H4(i,end) C_C_O2(i,end) C_C_CO2(i,end) C_C_CO(i,end) C_C_H2O(i,end) C_C_N2(i,end)];         % mole fraction of components in order: [C2H6 C2H4 O2 CO2 CO H2O]
     Initial_guess  = [C_gas_In C_Cpf_In C_Rof_In T0 Ts0];
@@ -314,13 +314,13 @@ for i = 1:numel(z_nodes)
     C_Ts(i,1)      = X(10);
     
     %r=R
-    C_C_C2H6(i,end)  = (((Ar(end,2:end-1)*C_C_C2H6(i,2:end-1))+(Ar(end,1)*(((Ar(1,2:end-1)*C_C_C2H6(i,2:end-1))-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_C2H6(i,2:end-1)))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))))))/(-Ar(end,end)));
-    C_C_C2H4(i,end)  = (((Ar(end,2:end-1)*C_C_C2H4(i,2:end-1))+(Ar(end,1)*(((Ar(1,2:end-1)*C_C_C2H4(i,2:end-1))-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_C2H4(i,2:end-1)))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))))))/(-Ar(end,end)));
-    C_C_O2(i,end)    = (((Ar(end,2:end-1)*C_C_O2(i,2:end-1))+(Ar(end,1)*(((Ar(1,2:end-1)*C_C_O2(i,2:end-1))-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_O2(i,2:end-1)))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))))))/(-Ar(end,end)));
-    C_C_CO2(i,end)   = (((Ar(end,2:end-1)*C_C_CO2(i,2:end-1))+(Ar(end,1)*(((Ar(1,2:end-1)*C_C_CO2(i,2:end-1))-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_CO2(i,2:end-1)))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))))))/(-Ar(end,end)));
-    C_C_CO(i,end)    = (((Ar(end,2:end-1)*C_C_CO(i,2:end-1))+(Ar(end,1)*(((Ar(1,2:end-1)*C_C_CO(i,2:end-1))-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_CO(i,2:end-1)))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))))))/(-Ar(end,end)));
-    C_C_H2O(i,end)   = (((Ar(end,2:end-1)*C_C_H2O(i,2:end-1))+(Ar(end,1)*(((Ar(1,2:end-1)*C_C_H2O(i,2:end-1))-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_H2O(i,2:end-1)))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))))))/(-Ar(end,end)));
-    C_C_N2(i,end)    = (((Ar(end,2:end-1)*C_C_N2(i,2:end-1))+(Ar(end,1)*(((Ar(1,2:end-1)*C_C_N2(i,2:end-1))-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_N2(i,2:end-1)))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))))))/(-Ar(end,end)));
+    C_C_C2H6(i,end)  = (((Ar(end,2:end-1)*C_C_C2H6(i,2:end-1)')+(Ar(end,1)*(((Ar(1,2:end-1)*C_C_C2H6(i,2:end-1)')-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_C2H6(i,2:end-1)'))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))))))/(-Ar(end,end)));
+    C_C_C2H4(i,end)  = (((Ar(end,2:end-1)*C_C_C2H4(i,2:end-1)')+(Ar(end,1)*(((Ar(1,2:end-1)*C_C_C2H4(i,2:end-1)')-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_C2H4(i,2:end-1)'))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))))))/(-Ar(end,end)));
+    C_C_O2(i,end)    = (((Ar(end,2:end-1)*C_C_O2(i,2:end-1)')+(Ar(end,1)*(((Ar(1,2:end-1)*C_C_O2(i,2:end-1)')-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_O2(i,2:end-1)'))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))))))/(-Ar(end,end)));
+    C_C_CO2(i,end)   = (((Ar(end,2:end-1)*C_C_CO2(i,2:end-1)')+(Ar(end,1)*(((Ar(1,2:end-1)*C_C_CO2(i,2:end-1)')-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_CO2(i,2:end-1)'))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))))))/(-Ar(end,end)));
+    C_C_CO(i,end)    = (((Ar(end,2:end-1)*C_C_CO(i,2:end-1)')+(Ar(end,1)*(((Ar(1,2:end-1)*C_C_CO(i,2:end-1)')-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_CO(i,2:end-1)'))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))))))/(-Ar(end,end)));
+    C_C_H2O(i,end)   = (((Ar(end,2:end-1)*C_C_H2O(i,2:end-1)')+(Ar(end,1)*(((Ar(1,2:end-1)*C_C_H2O(i,2:end-1)')-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_H2O(i,2:end-1)'))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))))))/(-Ar(end,end)));
+    C_C_N2(i,end)    = (((Ar(end,2:end-1)*C_C_N2(i,2:end-1)')+(Ar(end,1)*(((Ar(1,2:end-1)*C_C_N2(i,2:end-1)')-((Ar(1,end)/Ar(end,end))*Ar(end,2:end-1)*C_C_N2(i,2:end-1)'))/(((Ar(1,end)/Ar(end,end))*Ar(end,1))-(Ar(1,1))))))/(-Ar(end,end)));
     C_gas_In         = [C_C_C2H6(i,1) C_C_C2H4(i,1) C_C_O2(i,1) C_C_CO2(i,1) C_C_CO(i,1) C_C_H2O(i,1) C_C_N2(i,1)];         % mole fraction of components in order: [C2H6 C2H4 O2 CO2 CO H2O]
     C_gas_Out        = [C_C_C2H6(i,end) C_C_C2H4(i,end) C_C_O2(i,end) C_C_CO2(i,end) C_C_CO(i,end) C_C_H2O(i,end) C_C_N2(i,end)];         % mole fraction of components in order: [C2H6 C2H4 O2 CO2 CO H2O]
     Initial_guess    = [C_gas_Out C_Cpf_Out C_Rof_Out T0 Ts0];
@@ -336,7 +336,6 @@ for i = 1:numel(z_nodes)
     C_Rof(i,end)     = X(8);
     C_T(i,end)       = X(9);
     C_Ts(i,end)      = X(10);
-    
 end
 
 for i = 1 : numel(z_nodes)
@@ -433,9 +432,9 @@ Initial_C_N2          =  ones(length(zz),length(rr))*C0_N2     ;
 
 Conv_C2H6 = abs(C_C_C2H6)./(Initial_C_C2H6)   ;
 Conv_C2H4 = (C_C_C2H4)./(Initial_C_C2H6)      ;
-Conv_O2   = abs(C_C_O2)./(Initial_C_O2)         ;
-Conv_CO2  = (C_C_CO2)./(Initial_C_C2H6)        ;
-Conv_CO   = (C_C_CO)./(Initial_C_C2H6)          ;
+Conv_O2   = abs(C_C_O2)./(Initial_C_O2)       ;
+Conv_CO2  = (C_C_CO2)./(Initial_C_C2H6)       ;
+Conv_CO   = (C_C_CO)./(Initial_C_C2H6)        ;
 
 % plot the converion and temperature in reactor length (considering with 
 % mean of r direction conversion and temperature)
@@ -445,19 +444,15 @@ figure(1)
 plot(Zz, mean(Conv_C2H6,2), '--g', Zz, mean(Conv_C2H4,2), 'c', ...
      Zz, mean(Conv_O2,2), '-.r', Zz, mean(Conv_CO2,2), '--b', ...
      Zz, mean(Conv_CO,2), ':m', 'LineWidth',2)
-title('ODH reactor modeling - Conv & Yield')
-xlabel('Reactor length [m]')
-ylabel('Conversion and Yield')
-grid minor
+grid minor;title('ODH reactor modeling - Conv & Yield');
+xlabel('Reactor length [m]');ylabel('Conversion and Yield');
+legend('C2H6','C2H4','O2','CO2','CO','Location','best');
 
 figure(2)
 
-plot(Zz, mean(C_T,2), 'g', 'LineWidth',2)
-title('ODH reactor modeling - Temp')
-xlabel('Reactor length [m]')
-ylabel('Temperature [oC]')
-grid minor
-
+plot(Zz, mean(C_T-273.15,2), 'g', 'LineWidth',2)
+grid minor;title('ODH reactor modeling - Temp')
+xlabel('Reactor length [m]');ylabel('Temperature [oC]');
 
 %% Save the results
 % save('Results.mat','Conv_C2H6','Conv_C2H4','Conv_O2','Conv_CO2','Conv_CO','C_T','Zz','Rr')
