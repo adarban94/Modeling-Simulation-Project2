@@ -109,7 +109,7 @@ elseif strcmp(Direction,'Radius')== 1
         E_Rof = CC_Rof - 0.001*(Pt*((CC_C_C2H6/(CC_C_C2H6+CC_C_C2H4+CC_C_O2+CC_C_CO2+CC_C_CO+CC_C_H2O+CC_C_N2))*Components(1).Mw + (CC_C_C2H4/(CC_C_C2H6+CC_C_C2H4+CC_C_O2+CC_C_CO2+CC_C_CO+CC_C_H2O+CC_C_N2))*Components(2).Mw + (CC_C_O2/(CC_C_C2H6+CC_C_C2H4+CC_C_O2+CC_C_CO2+CC_C_CO+CC_C_H2O+CC_C_N2))*Components(3).Mw + (CC_C_CO2/(CC_C_C2H6+CC_C_C2H4+CC_C_O2+CC_C_CO2+CC_C_CO+CC_C_H2O+CC_C_N2))*Components(4).Mw + (CC_C_CO/(CC_C_C2H6+CC_C_C2H4+CC_C_O2+CC_C_CO2+CC_C_CO+CC_C_H2O+CC_C_N2))*Components(5).Mw ...
             + (CC_C_H2O/(CC_C_C2H6+CC_C_C2H4+CC_C_O2+CC_C_CO2+CC_C_CO+CC_C_H2O+CC_C_N2))*Components(6).Mw + (CC_C_N2/(CC_C_C2H6+CC_C_C2H4+CC_C_O2+CC_C_CO2+CC_C_CO+CC_C_H2O+CC_C_N2))*Components(7).Mw))/(R*CC_T); % [kg/m^3] Density of fluid;
         R=8.314e-3;                            % [(kJ/mol*K)]
-        E_T       = CC_T - (-Ar(1,2:end-1)*C_T - Ar(1,end)*(keffr*Ar(end,2:end-1)*C_T + hw*Tb)/(hw - keffr*Ar(end,end)))/((1 + (keffr*Ar(1,end)*Ar(end,1))/((hw - keffr*Ar(end,end))*Ar(1,1)))*Ar(1,1));
+        E_T       = CC_T - (-Ar(1,2:end-1)*C_T' - Ar(1,end)*(keffr*Ar(end,2:end-1)*C_T' + hw*Tb)/(hw - keffr*Ar(end,end)))/((1 + (keffr*Ar(1,end)*Ar(end,1))/((hw - keffr*Ar(end,end))*Ar(1,1)))*Ar(1,1));
         E_Ts      = (1-epsilon)*hg*as*(CC_T - CC_Ts) + Density_bed*ODHReactions(CC_Cpf,CC_solid,CC_Ts,R,Pt,Flowin,RxnKinetic,[Components.deltaS0],[Components.deltaH0],1,'Energy');
         
     elseif strcmp(BoundaryCond,'Last')== 1
@@ -141,7 +141,7 @@ elseif strcmp(Direction,'Radius')== 1
         E_Rof = CC_Rof - 0.001*(Pt*((CC_C_C2H6/(CC_C_C2H6+CC_C_C2H4+CC_C_O2+CC_C_CO2+CC_C_CO+CC_C_H2O+CC_C_N2))*Components(1).Mw + (CC_C_C2H4/(CC_C_C2H6+CC_C_C2H4+CC_C_O2+CC_C_CO2+CC_C_CO+CC_C_H2O+CC_C_N2))*Components(2).Mw + (CC_C_O2/(CC_C_C2H6+CC_C_C2H4+CC_C_O2+CC_C_CO2+CC_C_CO+CC_C_H2O+CC_C_N2))*Components(3).Mw + (CC_C_CO2/(CC_C_C2H6+CC_C_C2H4+CC_C_O2+CC_C_CO2+CC_C_CO+CC_C_H2O+CC_C_N2))*Components(4).Mw + (CC_C_CO/(CC_C_C2H6+CC_C_C2H4+CC_C_O2+CC_C_CO2+CC_C_CO+CC_C_H2O+CC_C_N2))*Components(5).Mw ...
             + (CC_C_H2O/(CC_C_C2H6+CC_C_C2H4+CC_C_O2+CC_C_CO2+CC_C_CO+CC_C_H2O+CC_C_N2))*Components(6).Mw + (CC_C_N2/(CC_C_C2H6+CC_C_C2H4+CC_C_O2+CC_C_CO2+CC_C_CO+CC_C_H2O+CC_C_N2))*Components(7).Mw))/(R*CC_T); % [kg/m^3] Density of fluid;
         R=8.314e-3;                            % [(kJ/mol*K)]
-        E_T       = CC_T - (keffr*Ar(end,2:end-1)*C_T + hw*Tb + keffr*Ar(end,1)*((-Ar(1,2:end-1)*C_T - Ar(1,end)*(keffr*Ar(end,2:end-1)*C_T + hw*Tb)/(hw - keffr*Ar(end,end)))/((1 + (keffr*Ar(1,end)*Ar(end,1))/((hw - keffr*Ar(end,end))*Ar(1,1)))*Ar(1,1))))/(hw - keffr*Ar(end,end));
+        E_T       = CC_T - (keffr*Ar(end,2:end-1)*C_T' + hw*Tb + keffr*Ar(end,1)*((-Ar(1,2:end-1)*C_T' - Ar(1,end)*(keffr*Ar(end,2:end-1)*C_T' + hw*Tb)/(hw - keffr*Ar(end,end)))/((1 + (keffr*Ar(1,end)*Ar(end,1))/((hw - keffr*Ar(end,end))*Ar(1,1)))*Ar(1,1))))/(hw - keffr*Ar(end,end));
         E_Ts      = (1-epsilon)*hg*as*(CC_T - CC_Ts) + Density_bed*ODHReactions(CC_Cpf,CC_solid,CC_Ts,R,Pt,Flowin,RxnKinetic,[Components.deltaS0],[Components.deltaH0],1,'Energy');
         
     end
